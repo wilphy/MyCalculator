@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,18 +10,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    //input-output-box
+    //输入输出框
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="60dip"
         android:editable="false"
-        android:id="@+id/et_showview"
+        android:id="@+id/box_input"
         android:gravity="bottom|right"
-        android:textSize="20sp"
+        android:textSize="40sp"
         android:background="@drawable/box"
         />
 
-    //keyboard
+    //键盘
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -28,14 +29,16 @@
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
-        //line 1
+        //第一行
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
+            //清除按钮
             <Button
+                android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:gravity="bottom|right"
                 android:paddingBottom="10dp"
@@ -43,7 +46,10 @@
                 android:textSize="20sp"
                 android:id="@+id/btn_clear"
                 android:text="C"
-                android:layout_width="70dp" />
+                android:background="@android:color/darker_gray"
+                />
+
+            //删除按钮
 
             <Button
                 android:layout_width="70dp"
@@ -54,7 +60,11 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_del"
-                android:text="DEL" />
+                android:text="DEL"
+                android:background="@android:color/darker_gray"
+                />
+
+            //除号
 
             <Button
                 android:layout_width="70dp"
@@ -65,8 +75,11 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_divide"
-                android:text="÷" />
+                android:text="÷"
+                android:background="@android:color/darker_gray"
+                />
 
+            //乘号
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -76,10 +89,12 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_multiply"
-                android:text="×" />
+                android:text="×"
+                android:background="@android:color/holo_orange_dark"
+                />
         </LinearLayout>
 
-        //line 2
+        //第二行
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,6 +102,7 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
+            //数字7
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -95,8 +111,11 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_7"
-                android:text="7" />
+                android:text="7"
+                android:background="@android:color/darker_gray"
+                />
 
+            //数字8
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -106,8 +125,11 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_8"
-                android:text="8" />
+                android:text="8"
+                android:background="@android:color/darker_gray"
+                />
 
+            //数字9
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -117,8 +139,11 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_9"
-                android:text="9" />
+                android:text="9"
+                android:background="@android:color/darker_gray"
+                />
 
+            //减号
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -128,9 +153,12 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_minus"
-                android:text="－" />
+                android:text="－"
+                android:background="@android:color/holo_orange_dark"
+                />
         </LinearLayout>
 
+        //第三行
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,6 +166,7 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
+            //数字4
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -146,8 +175,11 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_4"
-                android:text="4" />
+                android:text="4"
+                android:background="@android:color/darker_gray"
+                />
 
+            //数字5
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -157,8 +189,11 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_5"
-                android:text="5" />
+                android:text="5"
+                android:background="@android:color/darker_gray"
+                />
 
+            //数字6
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -168,8 +203,11 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_6"
-                android:text="6" />
+                android:text="6"
+                android:background="@android:color/darker_gray"
+                />
 
+            //加号
             <Button
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -178,10 +216,13 @@
                 android:paddingBottom="10dp"
                 android:paddingRight="10dp"
                 android:textSize="20sp"
-                android:id="@+id/btn_pluse"
-                android:text="＋" />
+                android:id="@+id/btn_plus"
+                android:text="＋"
+                android:background="@android:color/holo_orange_dark"
+                />
         </LinearLayout>
 
+        //第四行，第五行
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -189,6 +230,7 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal" >
 
+            //第四行第一列
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -207,7 +249,9 @@
                         android:paddingRight="10dp"
                         android:textSize="20sp"
                         android:id="@+id/btn_1"
-                        android:text="1" />
+                        android:text="1"
+                        android:background="@android:color/darker_gray"
+                        />
 
                     <Button
                         android:layout_width="70dp"
@@ -218,7 +262,9 @@
                         android:paddingRight="10dp"
                         android:textSize="20sp"
                         android:id="@+id/btn_2"
-                        android:text="2" />
+                        android:text="2"
+                        android:background="@android:color/darker_gray"
+                        />
 
                     <Button
                         android:layout_width="70dp"
@@ -229,7 +275,9 @@
                         android:paddingRight="10dp"
                         android:textSize="20sp"
                         android:id="@+id/btn_3"
-                        android:text="3" />
+                        android:text="3"
+                        android:background="@android:color/darker_gray"
+                        />
                 </LinearLayout>
 
                 <LinearLayout
@@ -246,7 +294,9 @@
                         android:paddingRight="10dp"
                         android:textSize="20sp"
                         android:id="@+id/btn_0"
-                        android:text="0" />
+                        android:text="0"
+                        android:background="@android:color/darker_gray"
+                        />
 
                     <Button
                         android:layout_width="70dp"
@@ -256,8 +306,10 @@
                         android:paddingBottom="10dp"
                         android:paddingRight="10dp"
                         android:text="."
-                        android:id="@+id/btn_point"
-                        android:textSize="20sp"/>
+                        android:id="@+id/btn_dot"
+                        android:textSize="20sp"
+                        android:background="@android:color/darker_gray"
+                        />
                 </LinearLayout>
             </LinearLayout>
 
@@ -270,8 +322,9 @@
                 android:paddingRight="10dp"
                 android:textSize="20sp"
                 android:id="@+id/btn_equal"
-                android:text="=" />
+                android:text="="
+                android:background="@android:color/holo_orange_dark"
+                />
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>
