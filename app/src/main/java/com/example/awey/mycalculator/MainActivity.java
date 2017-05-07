@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
     Button btn_0; //数字0
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     Button btn_del; //删除
     EditText box_input; //显示框
 
-    Boolean needclear;
+    Boolean clear_flag = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,25 +105,49 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.btn_8:
             case R.id.btn_9:
             case R.id.btn_dot:
-
-                box_input.setText(str + ((Button) v).getText());
+                if(clear_flag){
+                    clear_flag=false;
+                    str="";//计算下一个的时候，应该将原来的设置为空
+                    box_input.setText("");
+                }
+                box_input.setText(str+((Button)v).getText());
                 break;
+
+            //加减乘除四则运算
             case R.id.btn_plus:
             case R.id.btn_minus:
             case R.id.btn_multiply:
             case R.id.btn_divide:
+                if(clear_flag){
+                    clear_flag=false;
+                    str="";
+                    box_input.setText("");
+                }
+                //将点击的运算符添加到输入框前后有“ ”用于区别
                 box_input.setText(str + " " + ((Button) v).getText() + " ");
                 break;
-            case R.id.btn_equal:
-                getResult();
-                break;
+
+            //删除、清除
             case R.id.btn_del:
-                if (str != null && !str.equals("")) {
-                    box_input.setText(str.substring(0, str.length() - 1));
+                if (clear_flag) {
+                    clear_flag = false;
+                    str="";//计算下一个的时候，应该将原来的设置为空
+                    box_input.setText("");
+                }
+                else if (str!=null&& !str.equals(""))
+                {
+                    box_input.setText(str.substring(0,str.length()-1));
                 }
                 break;
             case R.id.btn_clear:
+                clear_flag=false;
+                str="";//计算下一个的时候，应该将原来的设置为空
                 box_input.setText("");
+                break;
+
+            //运算结果
+            case R.id.btn_equal:
+                getResult();
                 break;
         }
     }
@@ -131,33 +156,75 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
      * 获取计算结果
      */
     private void getResult() {
-        needclear = true;
         String exp = box_input.getText().toString();
-        double r = 0;
-        int space = exp.indexOf(' ');//用于搜索空格位置
-        String s1 = exp.substring(0, space);//s1用于保存第一个运算数
-        String op = exp.substring(space + 1, space + 2);//op用于保存运算符
-        String s2 = exp.substring(space + 3);//s2用于保存第二个运算数
-        double arg1 = Double.parseDouble(s1);//将运算数从string转换为Single
-        double arg2 = Double.parseDouble(s2);
-        if (op.equals("＋")) {
-            r = arg1 + arg2;
-        } else if (op.equals("－")) {
-            r = arg1 - arg2;
-        } else if (op.equals("×")) {
-            r = arg1 * arg2;
-        } else if (op.equals("÷")) {
-            if (arg2 == 0) {
-                r = 0;
+        if(clear_flag){
+            clear_flag=false;
+            return;
+        }
+        if (exp == null || exp.equals("")) {
+            return;
+        }
+        //没有输入运算符（运算符前后都手动加入了空格）
+        if (!exp.contains(" ")) {//如果不包含空格（运算符前面有空格），直接返回（比如点了数字，没有运算符）
+            return;
+        }
+        clear_flag = true;
+        double result = 0;
+        String s1 = exp.substring(0, exp.indexOf(" "));//运算符前面的字符串
+        String op = exp.substring(exp.indexOf(" ") + 1, exp.indexOf(" ") + 2);//运算符
+        String s2 = exp.substring(exp.indexOf(" ") + 3);//运算符后面的字符串
+        //s1、s2非空
+        if (!s1.equals("") && !s2.equals("")) {
+            double d1 = Double.parseDouble(s1);
+            double d2 = Double.parseDouble(s2);
+            if (op.equals("＋")) {
+                result = d1 + d2;
+            } else if (op.equals("－")) {
+                result = d1 - d2;
+            } else if (op.equals("×")) {
+                result = d1 * d2;
+            } else if (op.equals("÷")) {
+                if (d2 == 0) {
+                    Toast.makeText(MainActivity.this, "除数不能为0！！！", Toast.LENGTH_LONG).show();
+                    result = 0;
+                } else {
+                    result = d1 / d2;
+                }
+            }
+            if (!s1.contains(".") && !s2.contains(".")&&!op.equals("÷")) {
+                int r = (int)result;
+                box_input.setText(r + "");
             } else {
-                r = arg1 / arg2;
+                box_input.setText(result + "");
+            }
+        }else if(!s1.equals("") && s2.equals("")){
+            Toast.makeText(MainActivity.this, "不具备运算",Toast.LENGTH_LONG).show();
+            box_input.setText(exp);
+        }
+        //s1为空，s2非空
+        else if(s1.equals("") && !s2.equals("")){
+            double d2 = Double.parseDouble(s2);
+            if (op.equals("＋")) {
+                result = 0 + d2;
+            } else if (op.equals("－")) {
+                result = 0 - d2;
+            } else if (op.equals("×")) {
+                result = 0 ;
+            } else if (op.equals("÷")) {
+                result = 0;
+            }
+            if (!s1.contains(".") && !s2.contains(".")&&!op.equals("÷")) {
+                int r = (int)result;
+                box_input.setText(r + "");
+            } else {
+                box_input.setText(result + "");
             }
         }
-        if (!s1.contains(".") && !s2.contains(".")) {
-            int result = (int) r;
-            box_input.setText(result + "");
-        } else {
-            box_input.setText(r + "");
+        //s1、s2都是空
+        else{
+            box_input.setText("");
         }
     }
+
 }
+

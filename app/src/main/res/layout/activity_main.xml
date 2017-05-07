@@ -17,7 +17,7 @@
         android:editable="false"
         android:id="@+id/box_input"
         android:gravity="bottom|right"
-        android:textSize="40sp"
+        android:textSize="35sp"
         android:background="@drawable/box"
         />
 
