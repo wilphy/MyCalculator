@@ -1,16 +1,18 @@
 package com.example.awey.mycalculator;
 
 
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.view.MotionEvent;
+import android.text.TextUtils;
 
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btn_0; //数字0
     Button btn_1; //数字1
     Button btn_2; //数字2
@@ -27,18 +29,21 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     Button btn_minus; //减号
     Button btn_multiply; //乘号
     Button btn_divide; //除号
-    Button btn_equal; //等号
 
     Button btn_clear; //清除
     Button btn_del; //删除
+    Button btn_equal; //等号
+
     EditText box_input; //显示框
 
     Boolean clear_flag = true;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         //实例化按钮
         btn_0 = (Button) findViewById(R.id.btn_0);
@@ -61,11 +66,12 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
         btn_clear = (Button) findViewById(R.id.btn_clear); //清除
         btn_del = (Button) findViewById(R.id.btn_del); //删除
-        box_input = (EditText) findViewById(R.id.box_input);
 
         //实例化输入框
         box_input = (EditText) findViewById(R.id.box_input);
 
+
+        //给按钮设置点击事件
         btn_0.setOnClickListener(this);
         btn_1.setOnClickListener(this);
         btn_2.setOnClickListener(this);
@@ -82,17 +88,25 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         btn_multiply.setOnClickListener(this);
         btn_minus.setOnClickListener(this);
         btn_plus.setOnClickListener(this);
-        btn_equal.setOnClickListener(this);
 
         btn_clear.setOnClickListener(this);
         btn_del.setOnClickListener(this);
+
+        btn_equal.setOnClickListener(this);
+
+        //为editText添加onTouchListener监听事件
+        //result.setOnTouchListener(this);
+
 
     }
 
     @Override
     public void onClick(View v) {
         // TODO Auto-generated method stub
+
+        //取输入框的内容
         String str = box_input.getText().toString();
+
         switch (v.getId()) {
             case R.id.btn_0:
             case R.id.btn_1:
@@ -107,9 +121,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.btn_dot:
                 if(clear_flag){
                     clear_flag=false;
-                    str="";//计算下一个的时候，应该将原来的设置为空
+                    str="";    //进行下一轮计算前将输入框设置为空
                     box_input.setText("");
                 }
+                //点击数字按钮或小数点就将其添加到输入框里
                 box_input.setText(str+((Button)v).getText());
                 break;
 
@@ -118,6 +133,10 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.btn_minus:
             case R.id.btn_multiply:
             case R.id.btn_divide:
+                if (str.equals("")) {
+                    Toast.makeText(MainActivity.this, "不具备运算",Toast.LENGTH_LONG).show();
+                    box_input.setText("");
+                }
                 if(clear_flag){
                     clear_flag=false;
                     str="";
@@ -127,21 +146,22 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 box_input.setText(str + " " + ((Button) v).getText() + " ");
                 break;
 
-            //删除、清除
+            //删除
             case R.id.btn_del:
                 if (clear_flag) {
                     clear_flag = false;
-                    str="";//计算下一个的时候，应该将原来的设置为空
+                    str="";    //进行下一轮计算前将输入框设置为空
                     box_input.setText("");
                 }
-                else if (str!=null&& !str.equals(""))
-                {
+                else if (str!=null&& !str.equals("")) {
                     box_input.setText(str.substring(0,str.length()-1));
                 }
                 break;
+
+            //清除
             case R.id.btn_clear:
                 clear_flag=false;
-                str="";//计算下一个的时候，应该将原来的设置为空
+                str="";    //进行下一轮计算前将输入框设置为空
                 box_input.setText("");
                 break;
 
@@ -149,12 +169,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             case R.id.btn_equal:
                 getResult();
                 break;
+
+
         }
     }
+
 
     /**
      * 获取计算结果
      */
+
     private void getResult() {
         String exp = box_input.getText().toString();
         if(clear_flag){
@@ -191,8 +215,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                     result = d1 / d2;
                 }
             }
+            //判断是否有小数点或除号
             if (!s1.contains(".") && !s2.contains(".")&&!op.equals("÷")) {
-                int r = (int)result;
+                int r = (int)result;    //把result强制转化为int类型
                 box_input.setText(r + "");
             } else {
                 box_input.setText(result + "");
@@ -213,8 +238,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             } else if (op.equals("÷")) {
                 result = 0;
             }
+            //判断是否有小数点或除号
             if (!s1.contains(".") && !s2.contains(".")&&!op.equals("÷")) {
-                int r = (int)result;
+                int r = (int)result;    //把result强制转化为int类型
                 box_input.setText(r + "");
             } else {
                 box_input.setText(result + "");
@@ -225,6 +251,5 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             box_input.setText("");
         }
     }
-
 }
 
